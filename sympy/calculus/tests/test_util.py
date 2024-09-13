@@ -133,6 +133,8 @@ def test_continuous_domain():
     raises(NotImplementedError, lambda : continuous_domain(
         gamma(x), x, Interval(-5,0)))
     assert continuous_domain(x + gamma(pi), x, S.Reals) == S.Reals
+    assert continuous_domain(0**x, x, S.Reals) == Interval.open(0, oo)
+    assert continuous_domain(0**(x+1), x, S.Reals) == Interval.open(-1, oo)
 
 
 @XFAIL

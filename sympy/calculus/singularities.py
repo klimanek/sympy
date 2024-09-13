@@ -47,6 +47,9 @@ def singularities(expression, symbol, domain=None):
         singularity. An ``EmptySet`` is returned if ``expression`` has no
         singularities for any given value of ``Symbol``.
 
+    Interval
+        Interval is returned if ``expression`` has uncountably many singularities.
+
     Raises
     ======
 
@@ -84,6 +87,8 @@ def singularities(expression, symbol, domain=None):
     {-1, 1/2 - sqrt(3)*I/2, 1/2 + sqrt(3)*I/2}
     >>> singularities(log(x), x)
     {0}
+    >>> singularities(0**x, x)
+    Interval(-oo, 0)
 
     """
     from sympy.solvers.solveset import solveset
@@ -97,6 +102,8 @@ def singularities(expression, symbol, domain=None):
         for i in e.atoms(Pow):
             if i.exp.is_infinite:
                 raise NotImplementedError
+            if i.base == S.Zero:
+                sings += solveset(i.exp <= 0, symbol, domain)
             if i.exp.is_negative:
                 # XXX: exponent of varying sign not handled
                 sings += solveset(i.base, symbol, domain)
@@ -404,3 +411,4 @@ def is_monotonic(expression, interval=S.Reals, symbol=None):
     variable = symbol or (free.pop() if free else Symbol('x'))
     turning_points = solveset(expression.diff(variable), variable, interval)
     return interval.intersection(turning_points) is S.EmptySet
+
