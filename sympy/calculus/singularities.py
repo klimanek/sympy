@@ -42,13 +42,11 @@ def singularities(expression, symbol, domain=None):
     Returns
     =======
 
-    Set
-        A set of values for ``symbol`` for which ``expression`` has a
-        singularity. An ``EmptySet`` is returned if ``expression`` has no
-        singularities for any given value of ``Symbol``.
-
-    Interval
-        Interval is returned if ``expression`` has uncountably many singularities.
+    Set or Interval
+        A set of values for `symbol` for which `expression` has a
+        singularity. An `EmptySet` is returned if `expression` has no
+        singularities for any given value of `Symbol`. An `Interval` is returned
+        if `expression` has uncountably many singularities.
 
     Raises
     ======
